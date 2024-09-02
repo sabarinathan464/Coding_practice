@@ -29,7 +29,33 @@ index of the previous starting index.
  */
 
 public class Q2 {
-	public static void main(String[] args) {
-		Scanner inp = new Scanner(System.in);
-	}
+	public static int maxHorsesSequence(int[] prices, int N, int K) {
+        int maxLength = 0;
+        int currentSum = 0;
+        int start = 0;
+
+        for (int end = 0; end < N; end++) {
+            currentSum += prices[end];
+
+            // Shrink the window until the current sum is less than K
+            while (currentSum >= K) {
+                currentSum -= prices[start];
+                start++;
+            }
+
+            // Update the maximum length of the valid window
+            maxLength = Math.max(maxLength, end - start + 1);
+        }
+
+        return maxLength;
+    }
+
+    public static void main(String[] args) {
+        int N = 5;  // Number of horses
+        int K = 12; // Reward money
+        int[] prices = {2, 1, 4, 5, 3}; // Prices for betting on each horse
+
+        int result = maxHorsesSequence(prices, N, K);
+        System.out.println("Maximum continuous sequence length: " + result);
+    }
 }
